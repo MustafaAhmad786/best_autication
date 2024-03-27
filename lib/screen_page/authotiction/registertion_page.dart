@@ -19,6 +19,7 @@ class _SginUpState extends State<SginUp> {
   TextEditingController Emailcontroller = new TextEditingController();
   final formkey = GlobalKey<FormState>();
   bool loading = false;
+  bool ispasswordshow = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   SignUp() async {
@@ -98,7 +99,7 @@ class _SginUpState extends State<SginUp> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 1.0,
           decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50), topRight: Radius.circular(50))),
           child: Row(
@@ -209,13 +210,22 @@ class _SginUpState extends State<SginUp> {
                                   return null;
                                 },
                                 controller: Passwordcontroller,
-                                obscureText: true,
+                                obscureText: !ispasswordshow,
                                 obscuringCharacter: '*',
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(
                                       Icons.password,
                                       color: Colors.black,
                                     ),
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            ispasswordshow = !ispasswordshow;
+                                          });
+                                        },
+                                        icon: Icon(ispasswordshow
+                                            ? Icons.visibility
+                                            : Icons.visibility_off)),
                                     hintText: 'password',
                                     hintStyle: TextStyle(
                                         fontSize: 18, color: Colors.black)),
@@ -247,5 +257,11 @@ class _SginUpState extends State<SginUp> {
         )
       ]),
     );
+  }
+
+  @override
+  void dispose() {
+    Passwordcontroller.dispose();
+    super.dispose();
   }
 }

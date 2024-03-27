@@ -21,6 +21,7 @@ class _LoginPage_State extends State<LoginPage_> {
   TextEditingController passwordcontroler = TextEditingController();
   final _formkey = GlobalKey<FormState>();
   bool loading = false;
+  bool ispasswordshow = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
   void Login() {
     setState(() {
@@ -163,6 +164,7 @@ class _LoginPage_State extends State<LoginPage_> {
                             Container(
                               margin: EdgeInsets.only(left: 10, top: 10),
                               child: TextFormField(
+                                maxLines: 1,
                                 keyboardType: TextInputType.emailAddress,
                                 controller: emailcontroller,
                                 validator: (value) {
@@ -186,6 +188,7 @@ class _LoginPage_State extends State<LoginPage_> {
                               margin: EdgeInsets.only(left: 10, top: 10),
                               child: TextFormField(
                                 controller: passwordcontroler,
+                                maxLines: 1,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'password field';
@@ -194,13 +197,22 @@ class _LoginPage_State extends State<LoginPage_> {
                                   }
                                   return null;
                                 },
-                                obscureText: true,
+                                obscureText: !ispasswordshow,
                                 obscuringCharacter: '*',
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(
                                       Icons.password,
                                       color: Colors.black,
                                     ),
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            ispasswordshow = !ispasswordshow;
+                                          });
+                                        },
+                                        icon: Icon(ispasswordshow
+                                            ? Icons.visibility
+                                            : Icons.visibility_off)),
                                     hintText: 'password',
                                     hintStyle: TextStyle(
                                         fontSize: 18, color: Colors.black)),
@@ -249,5 +261,11 @@ class _LoginPage_State extends State<LoginPage_> {
         )
       ]),
     );
+  }
+
+  @override
+  void dispose() {
+    passwordcontroler.dispose();
+    super.dispose();
   }
 }
