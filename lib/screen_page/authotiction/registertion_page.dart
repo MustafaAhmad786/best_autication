@@ -223,9 +223,11 @@ class _SginUpState extends State<SginUp> {
                                             ispasswordshow = !ispasswordshow;
                                           });
                                         },
-                                        icon: Icon(ispasswordshow
-                                            ? Icons.visibility
-                                            : Icons.visibility_off)),
+                                        icon: Icon(
+                                            ispasswordshow
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color: Colors.black)),
                                     hintText: 'password',
                                     hintStyle: TextStyle(
                                         fontSize: 18, color: Colors.black)),
